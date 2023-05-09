@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>WebSocket Search Demo</title>
+</head>
+<body>
+	<h1>WebSocket + Trie Search Demo</h1>
+	<div id="search-container">
+		<input type="text" id="search-input" placeholder="Enter your search term...">
+	</div>
+	<div id="search-results">
+		<p>Search results will appear here...</p>
+	</div>
+	<script>
+		// Create a WebSocket connection when the page loads
+		const socket = new WebSocket('ws://localhost:8080/websocket_test/search_bar/123');
+		
+		// When the user enters a character in the search bar,
+		// send the search term to the server via WebSocket
+		const searchInput = document.getElementById('search-input');
+		searchInput.addEventListener('input', (event) => {
+			const searchTerm = event.target.value;
+            console.log(searchTerm)
+			socket.send(JSON.stringify(searchTerm));
+		});
+		
+		// When the server sends back search results, display them
+		const searchResults = document.getElementById('search-results');
+		socket.addEventListener('message', (event) => {
+			const results = JSON.parse(event.data);
+			searchResults.innerHTML = '';
+			if (results.length > 0) {
+				const ul = document.createElement('ul');
+				for (const result of results) {
+					const li = document.createElement('li');
+					li.textContent = result;
+					ul.appendChild(li);
+				}
+				searchResults.appendChild(ul);
+			} else {
+				const p = document.createElement('p');
+				p.textContent = 'No results found.';
+				searchResults.appendChild(p);
+			}
+		});
+		
+		// Close the WebSocket connection when the page is closed
+		window.addEventListener('beforeunload', () => {
+			socket.close();
+			});
+	</script>
+</body>
+</html>

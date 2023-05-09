@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Socket</title>
+</head>
+    <body>
+        
+        <script>
+            const token = 'Bearer YOUR_TOKEN_HERE';
+            const socket = new WebSocket("ws://localhost:8080/websocket_test/search_bar/123", nil)
+            console.log("Websocket connection...")
+
+            socket.onopen = () => {
+                console.log("Connected");
+                socket.send(JSON.stringify({
+                    type: 'auth',
+                    payload: { token: '86VZIKXXNFU8GWI1LRIG5A' }
+                }));
+                setInterval(() => {
+                    const message = { "text": "Hello from client!" };
+                    socket.send(JSON.stringify(message));
+                }, 5000);
+            }
+
+            socket.onclose = (event) => {
+                console.log("Socket Closed Connection: ", event);
+                return
+            }
+
+            socket.onmessage = (msg) => {
+                console.log(msg);
+            }
+
+            socket.onerror = (error) => {
+                console.log("Socket ErrorL ", error);
+            }
+
+            function getApiCredentials(clientId, clientSecret) {
+                const url = `https://app-dev.s-eco.com.my/api_credentials?client_id=${clientId}&client_secret=${clientSecret}`;
+                return fetch(url)
+                    .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        return data;
+                    })
+                    .catch(error => {
+                        console.error('There was a problem fetching the API credentials:', error);
+                        throw error;
+                    });
+                }
+        </script>
+    </body>
+</html>

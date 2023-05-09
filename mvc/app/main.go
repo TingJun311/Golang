@@ -29,6 +29,7 @@ func main() {
 	}
 	fmt.Println("Random String here: ", hash)
 	fmt.Println(GetHashedString(hash))
+	fmt.Println(getBase10Int())
 }
 
 func GetHashedString(stringToHash string) string {
