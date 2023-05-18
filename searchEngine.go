@@ -6,8 +6,6 @@ import (
 	"log"
 	"net/http"
 	"time"
-
-	//"time"
 	websocketfunc "app/ds/websocketFunc"
 	"github.com/gorilla/websocket"
 )
