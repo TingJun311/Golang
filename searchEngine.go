@@ -67,7 +67,6 @@ func main() {
 func websocketFunc() {
 	// Set the HTTP request header with the Bearer token
 	header := http.Header{}
-	//header.Set("Authorization", "Bearer SK22T-AJPCERGM8U62VLHA")
 
 	// Create a new WebSocket dialer with the HTTP request header
 	//	dialer := websocket.Dialer{
