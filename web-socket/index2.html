@@ -14,7 +14,7 @@
 	</div>
 	<script>
 		// Create a WebSocket connection when the page loads
-		const socket = new WebSocket('ws://localhost:8080/websocket_test/search_bar/123');
+		const socket = new WebSocket('ws://localhost:8080/websocket_test/search_bar');
 		
 		// When the user enters a character in the search bar,
 		// send the search term to the server via WebSocket
@@ -48,7 +48,7 @@
 		// Close the WebSocket connection when the page is closed
 		window.addEventListener('beforeunload', () => {
 			socket.close();
-			});
+		});
 	</script>
 </body>
 </html>

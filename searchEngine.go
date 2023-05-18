@@ -8,7 +8,7 @@ import (
 	"time"
 
 	//"time"
-	//websocketfunc "app/ds/websocketFunc"
+	websocketfunc "app/ds/websocketFunc"
 	"github.com/gorilla/websocket"
 )
 
@@ -35,8 +35,9 @@ func reader(conn *websocket.Conn) {
 			log.Println(err)
 		}
 		log.Println("[MESSAGE]: ", data2)
+		res := websocketfunc.SearchBar(data)
 
-		if err := conn.WriteMessage(messageType, []byte("Hellow")); err != nil {
+		if err := conn.WriteMessage(messageType, res); err != nil {
 			log.Println(err)
 			return
 		}
